@@ -1,0 +1,94 @@
+
+import re
+from typing import List, Tuple
+import urllib
+import rocketbot.commands as c
+import rocketbot.models as m
+from atlassian import Confluence
+import logging
+console = logging.StreamHandler()
+console.setFormatter(logging.Formatter('%(asctime)s %(levelname)s [%(name)s]: %(message)s', "%Y-%m-%d %H:%M:%S"))
+root = logging.getLogger()
+root.handlers.clear()
+root.addHandler(console)
+
+# Configure logglevels
+logging.getLogger().setLevel(logging.WARNING)
+logging.getLogger("rocketbot").setLevel(logging.INFO)
+
+
+confluence = Confluence(
+    url='https://confluence.julien.tech',
+    username='confluence',
+    password='186o73l7')
+ 
+
+def search_word_in_space(space, word):
+    """
+    Get all found pages with order by created date
+    :param space
+    :param word:
+    :return: json answer
+    """
+    #text= urllib.parse.quote(f'"{word}"', safe='')
+    cql = f"space in ({space}) and (text ~ \"{word}\")"
+    root.warning(f"cql")
+    answers = confluence.cql(cql, expand='space,body.view')
+    
+    
+    
+    root.warning(answers)
+    return answers.get('results')[0:3]
+
+
+
+class Confluence(c.BaseCommand):
+    def usage(self) -> List[Tuple[str, str]]:
+        return [
+            ('search <sentence>', 'Searches for a sentence in confluence and refines results using AI.'),
+        ]
+
+    def can_handle(self, command: str) -> bool:
+        """Check whether the command is applicable
+        """
+        return command in ['search', 'how do i']
+
+    async def handle(self, command: str, args: str, message: m.Message) -> None:
+        """Handle the incoming message
+        """
+        root.warning(message)
+        if command == 'search':
+            
+            args = args.strip().lower()
+            
+            urls = []
+            root.warning(args)
+            results = search_word_in_space("TEAM", args)
+            root.warning(results)
+
+            for answer in results:
+               
+                urls.append(answer['content']['_links']['webui'])
+
+            await self.master.ddp.send_message(message.roomid, f"https://confluence.julien.tech/{urls[0]}")
+            #user = message.mentions[0]
+            #if user.username == message.created_by.username:
+            #    await self.master.ddp.send_message(message.roomid, "Please mention someone other than yourself")
+            #    return
+
+            #result = await self.master.rest.users_list(count=0)
+            #users = [m.create(m.User, u) for u in result.json()['users']]
+
+            #username = user.name if user.name is not None else user.username
+            #username = re.sub(r'\s', '_', username).lower()
+            #name = f'geburtstag_{username}'
+            #members = [u.username for u in users if u.username != user.username]
+            #result = await self.master.rest.groups_create(name=name, members=members)
+
+            #if result.status_code != 200:
+            #    await self.master.ddp.send_message(message.roomid, result.json()['error'])
+            #    return
+            #room = m.create(m.Room, result.json()['group'])
+            #await self.master.rest.groups_add_owner(room_id=room._id, user_id=message.created_by._id)
+            return
+
