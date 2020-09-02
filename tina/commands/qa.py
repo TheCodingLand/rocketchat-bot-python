@@ -6,6 +6,8 @@ import rocketbot.commands as c
 import rocketbot.models as m
 from atlassian import Confluence
 import logging
+from tina.ia.qa import QA
+
 console = logging.StreamHandler()
 console.setFormatter(logging.Formatter('%(asctime)s %(levelname)s [%(name)s]: %(message)s', "%Y-%m-%d %H:%M:%S"))
 root = logging.getLogger()
@@ -21,7 +23,20 @@ confluence = Confluence(
     url='https://confluence.julien.tech',
     username='confluence',
     password='186o73l7')
- 
+    
+qa = QA() 
+
+def qa_prediction(question,context):
+    result = qa.predict(context, question)
+    answer=result[0][0]['answer'][0]
+
+    start=context.find(answer)
+    end = start + len(answer)
+    html_answer=f'<p>{context[start-20:start]}</p><span style="background-color:#dfd;">{context[start:end]}</span><p>{context[end:end+20]}</p>'
+    print(html_answer)
+    return { "context": context, "question" : question, "start" : start, "end": end, "html" :html_answer, "link": "test"}
+
+
 
 def search_word_in_space(space, word):
     """
@@ -69,6 +84,8 @@ class Confluence(c.BaseCommand):
             for answer in results:
                
                 urls.append(answer['content']['_links']['webui'])
+            
+                
 
             await self.master.ddp.send_message(message.roomid, f"https://confluence.julien.tech/{urls[0]}")
             #user = message.mentions[0]
