@@ -8,6 +8,7 @@ from atlassian import Confluence
 import logging
 from tina.ia.qa import QA
 
+from bs4 import BeautifulSoup
 console = logging.StreamHandler()
 console.setFormatter(logging.Formatter('%(asctime)s %(levelname)s [%(name)s]: %(message)s', "%Y-%m-%d %H:%M:%S"))
 root = logging.getLogger()
@@ -26,6 +27,13 @@ confluence = Confluence(
     
 qa = QA() 
 
+
+def get_body_content(t):
+
+    text = BeautifulSoup(t, 'lxml').text
+    text = unicodedata.normalize("NFKD", text)
+    
+    return text
 def qa_prediction(question,context):
     result = qa.predict(context, question)
     answer=result[0][0]['answer'][0]
