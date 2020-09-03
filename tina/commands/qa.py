@@ -154,7 +154,7 @@ class Confluence(c.BaseCommand):
             #    return
             #room = m.create(m.Room, result.json()['group'])
             #await self.master.rest.groups_add_owner(room_id=room._id, user_id=message.created_by._id)
-            return
+            
 
 test = ([{'id': '0', 'answer': ['pruning', 'pruning)', 'docker host (pruning', 'docker host (pruning)', 'docker host - Set disks - Cleanup docker host (pruning)', 'docker', 'disks - Cleanup docker host (pruning)', 'docker host - Set disks - Cleanup docker', 'docker host', 'docker host - Set disks - Cleanup docker host', '(pruning', 'Set disks - Cleanup docker host (pruning)', '(pruning)', 'docker host - Set disks', 'Cleanup docker host (pruning)', 'host (pruning', 'disks - Cleanup docker', 'host (pruning)', '- Cleanup docker host (pruning)', 'host - Set disks - Cleanup docker host (pruning)']}], [{'id': '0', 'probability': [0.2784995507700732, 0.2328956991676526, 0.10667831508363457, 0.08920991329692292, 0.07760653589717735, 0.03290101248507913, 0.025517588065151264, 0.023934888777302016, 0.020794540574563966, 0.015127650434861245, 0.014480541268869457, 0.013433609041247331, 0.012109376025254954, 0.011474136750868445, 0.008762307215637493, 0.007945642858260967, 0.007869963852189143, 0.006644556674128768, 0.006039356012502972, 0.005474139398111467]}])
 
