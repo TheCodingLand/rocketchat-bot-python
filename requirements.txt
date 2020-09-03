@@ -12,3 +12,4 @@ atlassian-python-api
 simpletransformers
 beautifulsoup4
 torch
+lxml
