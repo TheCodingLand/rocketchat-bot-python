@@ -38,14 +38,13 @@ def get_body_content(t):
     return text
 def qa_prediction(question,context):
     result = qa.predict(context, question)
-    root.warn(result)
+    #root.warn(result)
     answer=result[0][0]['answer'][0]
     proba=result[1][0]['probability'][0]
-
     start=context.find(answer)
     end = start + len(answer)
     html_answer=f'<p>{context[start-20:start]}</p><span style="background-color:#dfd;">{context[start:end]}</span><p>{context[end:end+20]}</p>'
-    print(html_answer)
+    #print(html_answer)
     return { "context": context, "question" : question, "start" : start, "end": end, "html" :html_answer, "link": "test", 'proba': proba}
 
 
@@ -62,10 +61,7 @@ def search_word_in_space(space, word):
     root.warning(f"cql")
     answers = confluence.cql(cql, expand='space,body.view')
     
-    
-    
-    
-    root.warning(answers)
+    #root.warning(answers)
     return answers.get('results')[0:3]
 
 
@@ -122,9 +118,10 @@ class Confluence(c.BaseCommand):
                 else:
                     if result['proba']>best['proba']:
                         best=result
+                root.warn("best proba: "+ best['proba'])
             
 
-            await self.master.ddp.send_message(message.roomid, f"{best['context']}")
+            await self.master.ddp.send_message(message.roomid, f"{best['html']}")
 
                 
 
