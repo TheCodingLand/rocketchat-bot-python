@@ -21,8 +21,8 @@ import rocketbot.bots as bots  # noqa: E402
 import rocketbot.commands as com  # noqa: E402
 import rocketbot.master as master  # noqa: E402
 import rocketbot.models as m  # noqa: E402
-import rocketbot.utils.poll as pollutil  # noqa: E402
-import rocketbot.utils.sentry as sentry  # noqa: E402
+#import rocketbot.utils.poll as pollutil  # noqa: E402
+#import rocketbot.utils.sentry as sentry  # noqa: E402
 
 import tina.commands as com2  # noqa: E402
 
@@ -35,27 +35,27 @@ except ModuleNotFoundError:
 async def setup_bot() -> master.Master:
 
     # Overwrite +1,+2,+3,ü4 emoji with custom ones
-    pollutil.NUMBER_EMOJI_TO_VALUE = {
-        ':x1:': 1,
-        ':x2:': 2,
-        ':x3:': 3,
-        ':x4:': 4,
-    }
+    #pollutil.NUMBER_EMOJI_TO_VALUE = {
+    #    ':x1:': 1,
+    #    ':x2:': 2,
+    #    ':x3:': 3,
+    #    ':x4:': 4,
+    #}
 
     loop = asyncio.get_event_loop()
 
     masterbot = master.Master(c.SERVER, c.BOTNAME, c.PASSWORD, loop=loop)
     await masterbot.rest.login(c.BOTNAME, c.PASSWORD)
 
-    result = (await masterbot.rest.rooms_info(room_name=c.POLL_STATUS_ROOM)).json()
-    print(result)
-    statusroom = m.create(m.Room, result['room'])
-    pollmanager = await pollutil.PollManager.create_pollmanager(
-        master=masterbot, botname=c.BOTNAME, statusroom=statusroom.to_roomref())
+    #result = (await masterbot.rest.rooms_info(room_name=c.POLL_STATUS_ROOM)).json()
+    #print(result)
+    #statusroom = m.create(m.Room, result['room'])
+    #pollmanager = await pollutil.PollManager.create_pollmanager(
+    #    master=masterbot, botname=c.BOTNAME, statusroom=statusroom.to_roomref())
 
     usage = com.Usage(master=masterbot)
     ping = com.Ping(master=masterbot)
-    poll = com.Poll(master=masterbot, pollmanager=pollmanager)
+    #poll = com.Poll(master=masterbot, pollmanager=pollmanager)
     notify = com.CatchAll(master=masterbot, callback=com.private_message_user)
     
 
