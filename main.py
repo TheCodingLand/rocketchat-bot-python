@@ -22,7 +22,7 @@ import rocketbot.commands as com  # noqa: E402
 import rocketbot.master as master  # noqa: E402
 import rocketbot.models as m  # noqa: E402
 #import rocketbot.utils.poll as pollutil  # noqa: E402
-#import rocketbot.utils.sentry as sentry  # noqa: E402
+import rocketbot.utils.sentry as sentry  # noqa: E402
 
 import tina.commands as com2  # noqa: E402
 

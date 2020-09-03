@@ -30,6 +30,7 @@ qa = QA()
 
 
 def get_body_content(t):
+    
 
     text = BeautifulSoup(t, 'lxml').text
     text = unicodedata.normalize("NFKD", text)
@@ -55,9 +56,10 @@ def search_word_in_space(space, word):
     :return: json answer
     """
     #text= urllib.parse.quote(f'"{word}"', safe='')
-    cql = f"space in ({space}) and (text ~ \"{word}\")"
+    cql = f"type=page and space in ({space}) and (text ~ \"{word}\")"
     root.warning(f"cql")
     answers = confluence.cql(cql, expand='space,body.view')
+    
     
     
     
@@ -89,14 +91,21 @@ class Confluence(c.BaseCommand):
             root.warning(args)
             results = search_word_in_space("DEV", args)
             root.warning(results)
-
+            pages =[]
             for answer in results:
-               
                 urls.append(answer['content']['_links']['webui'])
+                page=confluence.get_page_by_id(answer['results'][0]['content']['id'], expand='body.view', status=None, version=None)
+                pages.append(page)
+            
+            
+            text_content = get_body_content(page[0])
+            root.warning(text_content)
             
                 
 
+            
             await self.master.ddp.send_message(message.roomid, f"https://confluence.ctg.lu/{urls[0]}")
+            
             #user = message.mentions[0]
             #if user.username == message.created_by.username:
             #    await self.master.ddp.send_message(message.roomid, "Please mention someone other than yourself")
