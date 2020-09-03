@@ -121,7 +121,7 @@ class Confluence(c.BaseCommand):
                     best = result
                 else:
                     if result['proba']>best['proba']:
-                        best=proba
+                        best=result
             
 
             await self.master.ddp.send_message(message.roomid, f"{best['context']}")
