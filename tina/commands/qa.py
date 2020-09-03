@@ -42,7 +42,7 @@ def qa_prediction(question,context):
     root.warn(result)
     
     for a in range(0,len(result[0][0]['answer'])):
-        if len(result[0][0]['answer'][0]) >0:
+        if len(result[0][0]['answer'][a]) >0:
             answer=result[0][0]['answer'][a]
             proba=result[1][0]['probability'][a]
             break
