@@ -114,16 +114,17 @@ class Confluence(c.BaseCommand):
                 final_result = qa_prediction(args,text_content)
                 root.warn(final_result['context'])
                 final_results.append(final_result)
- 
+            best = None
             for result in final_results:
-                best = None
-                if best ==None:
+                
+                if best == None:
                     best = result
                 else:
-                    if result['']
-                
+                    if result['proba']>best['proba']:
+                        best=proba
+            
 
-            await self.master.ddp.send_message(message.roomid, f"{final_result['context']}")
+            await self.master.ddp.send_message(message.roomid, f"{best['context']}")
 
                 
 
