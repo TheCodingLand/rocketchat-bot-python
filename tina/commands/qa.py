@@ -101,7 +101,9 @@ class Confluence(c.BaseCommand):
             text_content = get_body_content(pages[0]['body']['view']['value'])
             root.warning(text_content)
             #return page_content['title'], page_content
-            
+            final_result = qa_prediction(args,text_content)
+            root.warn(final_result)
+
                 
 
             
