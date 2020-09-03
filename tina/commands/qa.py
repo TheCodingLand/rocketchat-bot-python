@@ -96,7 +96,7 @@ class Confluence(c.BaseCommand):
             
                 
 
-            await self.master.ddp.send_message(message.roomid, f"https://confluence.julien.tech/{urls[0]}")
+            await self.master.ddp.send_message(message.roomid, f"https://confluence.ctg.lu/{urls[0]}")
             #user = message.mentions[0]
             #if user.username == message.created_by.username:
             #    await self.master.ddp.send_message(message.roomid, "Please mention someone other than yourself")
