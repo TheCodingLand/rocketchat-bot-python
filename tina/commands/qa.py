@@ -140,7 +140,7 @@ class Confluence(c.BaseCommand):
             
 
             await self.master.ddp.send_message(message.roomid, f"{best['answer']}")
-
+            return
                 
 
             
