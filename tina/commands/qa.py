@@ -41,10 +41,12 @@ def qa_prediction(question,context):
     #root.warn(result)
     answer=result[0][0]['answer'][0]
     proba=result[1][0]['probability'][0]
+    root.warn(answer)
     start=context.find(answer)
     end = start + len(answer)
     html_answer=f'<p>{context[start-20:start]}</p><span style="background-color:#dfd;">{context[start:end]}</span><p>{context[end:end+20]}</p>'
     #print(html_answer)
+
     return { "context": context, "question" : question, "start" : start, "end": end, "html" :html_answer, "link": "test", 'proba': proba}
 
 
@@ -113,6 +115,7 @@ class Confluence(c.BaseCommand):
             #root.warn(final_result['context'])
             #final_results.append(final_result)
             best = final_result
+            root.warn(best)
             
             #for result in final_results:
             #    
