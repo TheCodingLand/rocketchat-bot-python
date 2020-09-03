@@ -2,6 +2,7 @@
 import re
 from typing import List, Tuple
 import urllib
+import unicodedata
 import rocketbot.commands as c
 import rocketbot.models as m
 from atlassian import Confluence
