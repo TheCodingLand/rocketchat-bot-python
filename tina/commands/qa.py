@@ -38,7 +38,9 @@ def get_body_content(t):
     return text
 def qa_prediction(question,context):
     result = qa.predict(context, question)
+    root.warn(result)
     answer=result[0][0]['answer'][0]
+    
 
     start=context.find(answer)
     end = start + len(answer)
@@ -103,13 +105,25 @@ class Confluence(c.BaseCommand):
             await self.master.ddp.send_message(message.roomid, f"Most relavant link:")
             await self.master.ddp.send_message(message.roomid, f"https://confluence.ctg.lu/{urls[0]}")
             await self.master.ddp.send_message(message.roomid, f"Some Results from Tina:")
+
+            final_results=[]
             for page in pages:
                 text_content = get_body_content(page['body']['view']['value'])
                 root.warning(text_content)
                 #return page_content['title'], page_content
                 final_result = qa_prediction(args,text_content)
                 root.warn(final_result['context'])
-                await self.master.ddp.send_message(message.roomid, f"{final_result['context']}")
+                final_results.append(final_result)
+ 
+            for result in final_results:
+                best = None
+                if best ==None:
+                    best = result
+                else:
+                    if result['']
+                
+
+            await self.master.ddp.send_message(message.roomid, f"{final_result['context']}")
 
                 
 
