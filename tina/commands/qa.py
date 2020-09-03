@@ -98,8 +98,9 @@ class Confluence(c.BaseCommand):
                 pages.append(page)
             
             
-            text_content = get_body_content(page[0])
+            text_content = get_body_content(pages[0]['body']['view']['value'])
             root.warning(text_content)
+            #return page_content['title'], page_content
             
                 
 
