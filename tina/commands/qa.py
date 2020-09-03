@@ -118,7 +118,7 @@ class Confluence(c.BaseCommand):
                 else:
                     if result['proba']>best['proba']:
                         best=result
-                root.warn("best proba: "+ best['proba'])
+                root.warn(f"best proba: {best['proba']}")
             
 
             await self.master.ddp.send_message(message.roomid, f"{best['html']}")
