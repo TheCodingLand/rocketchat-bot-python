@@ -108,7 +108,7 @@ class Confluence(c.BaseCommand):
 
             await self.master.ddp.send_message(message.roomid, f"Some links :")
             await self.master.ddp.send_message(message.roomid, f"https://confluence.ctg.lu/{urls[0]}")
-            await self.master.ddp.send_message(message.roomid, f"Some Results from TINA: {final_results}")
+            await self.master.ddp.send_message(message.roomid, f"Some Results from TINA: {final_result}")
             
             #user = message.mentions[0]
             #if user.username == message.created_by.username:
