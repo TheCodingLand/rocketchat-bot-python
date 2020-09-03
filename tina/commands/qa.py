@@ -58,7 +58,7 @@ def search_word_in_space(space, word):
     """
     #text= urllib.parse.quote(f'"{word}"', safe='')
     cql = f"type=page and space in ({space}) and (text ~ \"{word}\")"
-    root.warning(f"cql")
+    
     answers = confluence.cql(cql, expand='space,body.view')
     
     #root.warning(answers)
@@ -102,24 +102,27 @@ class Confluence(c.BaseCommand):
             await self.master.ddp.send_message(message.roomid, f"https://confluence.ctg.lu/{urls[0]}")
             await self.master.ddp.send_message(message.roomid, f"Some Results from Tina:")
 
-            final_results=[]
+            #final_results=[]
+            full_context=""
             for page in pages:
                 text_content = get_body_content(page['body']['view']['value'])
+                full_context = f"\n{text_content}"
                 #root.warning(text_content)
                 #return page_content['title'], page_content
-                final_result = qa_prediction(args, text_content)
-                #root.warn(final_result['context'])
-                final_results.append(final_result)
-            best = None
-            for result in final_results:
-                
-                if best == None:
-                    best = result
-                else:
-                    if result['proba']>best['proba']:
-                        best=result
-                root.warn(f"best proba: {best['proba']}")
-                root.warn(f"best proba: {best['html']}")
+            final_result = qa_prediction(args, text_content)
+            #root.warn(final_result['context'])
+            #final_results.append(final_result)
+            best = final_result
+            
+            #for result in final_results:
+            #    
+            #    if best == None:
+            #        best = result
+            #    else:
+            #        if result['proba']>best['proba']:
+            #            best=result
+            #    root.warn(f"best proba: {best['proba']}")
+            #    root.warn(f"best proba: {best['html']}")
             
 
             await self.master.ddp.send_message(message.roomid, f"{best['html']}")
