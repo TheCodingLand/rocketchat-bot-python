@@ -40,7 +40,7 @@ def qa_prediction(question,context):
     result = qa.predict(context, question)
     root.warn(result)
     answer=result[0][0]['answer'][0]
-    proba=result[0][0]['probability'][0]
+    proba=result[0][1]['probability'][0]
 
     start=context.find(answer)
     end = start + len(answer)
