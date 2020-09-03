@@ -11,3 +11,4 @@ ftfbroker==0.0.3
 atlassian-python-api
 simpletransformers
 beautifulsoup4
+torch
