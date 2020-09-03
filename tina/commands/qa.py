@@ -96,19 +96,22 @@ class Confluence(c.BaseCommand):
                 urls.append(answer['content']['_links']['webui'])
                 page=confluence.get_page_by_id(answer['content']['id'], expand='body.view', status=None, version=None)
                 pages.append(page)
-            
-            
-            text_content = get_body_content(pages[0]['body']['view']['value'])
-            root.warning(text_content)
-            #return page_content['title'], page_content
-            final_result = qa_prediction(args,text_content)
-            root.warn(final_result['context'])
+
+            await self.master.ddp.send_message(message.roomid, f"Most relavant link:")
+            await self.master.ddp.send_message(message.roomid, f"https://confluence.ctg.lu/{urls[0]}")
+            await self.master.ddp.send_message(message.roomid, f"Some Results from Tina:")
+            for page in pages:
+                text_content = get_body_content(page['body']['view']['value'])
+                root.warning(text_content)
+                #return page_content['title'], page_content
+                final_result = qa_prediction(args,text_content)
+                root.warn(final_result['context'])
+                await self.master.ddp.send_message(message.roomid, f"{final_result['context']}")
 
                 
 
-            await self.master.ddp.send_message(message.roomid, f"Some links :")
-            await self.master.ddp.send_message(message.roomid, f"https://confluence.ctg.lu/{urls[0]}")
-            await self.master.ddp.send_message(message.roomid, f"Some Results from TINA: {final_result['context']}")
+            
+            
             
             #user = message.mentions[0]
             #if user.username == message.created_by.username:
