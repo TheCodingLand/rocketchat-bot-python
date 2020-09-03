@@ -102,13 +102,13 @@ class Confluence(c.BaseCommand):
             root.warning(text_content)
             #return page_content['title'], page_content
             final_result = qa_prediction(args,text_content)
-            root.warn(final_result)
+            root.warn(final_result['context'])
 
                 
 
             await self.master.ddp.send_message(message.roomid, f"Some links :")
             await self.master.ddp.send_message(message.roomid, f"https://confluence.ctg.lu/{urls[0]}")
-            await self.master.ddp.send_message(message.roomid, f"Some Results from TINA: {final_result}")
+            await self.master.ddp.send_message(message.roomid, f"Some Results from TINA: {final_result['context']}")
             
             #user = message.mentions[0]
             #if user.username == message.created_by.username:
