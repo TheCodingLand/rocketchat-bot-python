@@ -90,6 +90,9 @@ class Confluence(c.BaseCommand):
             urls = []
             root.warning(args)
             results = search_word_in_space("DEV", args)
+            for word in args.split(' '):
+                for result in search_word_in_space("DEV", word):
+                    results.append(result)
             root.warning(results)
             pages =[]
             for answer in results:
