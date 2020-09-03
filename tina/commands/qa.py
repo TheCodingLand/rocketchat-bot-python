@@ -95,7 +95,7 @@ class Confluence(c.BaseCommand):
             for word in args.split(' '):
                 for result in search_word_in_space("DEV", word):
                     results.append(result)
-            root.warning(results)
+            #root.warning(results)
             pages =[]
             for answer in results:
                 urls.append(answer['content']['_links']['webui'])
@@ -109,10 +109,10 @@ class Confluence(c.BaseCommand):
             final_results=[]
             for page in pages:
                 text_content = get_body_content(page['body']['view']['value'])
-                root.warning(text_content)
+                #root.warning(text_content)
                 #return page_content['title'], page_content
                 final_result = qa_prediction(args,text_content)
-                root.warn(final_result['context'])
+                #root.warn(final_result['context'])
                 final_results.append(final_result)
             best = None
             for result in final_results:
