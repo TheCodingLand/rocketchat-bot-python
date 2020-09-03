@@ -16,8 +16,9 @@ RUN mkdir -p /data/models/
 
 WORKDIR /bot/
 
-ADD ./dl_models.py /bot
-RUN python dl_models.py
+ADD ./dl_models.py /bot/dl_models.py
+
+RUN python /bot/dl_models.py
 
 ADD . .
 
