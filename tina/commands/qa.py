@@ -87,7 +87,7 @@ class Confluence(c.BaseCommand):
             
             urls = []
             root.warning(args)
-            results = search_word_in_space("TEAM", args)
+            results = search_word_in_space("DEV", args)
             root.warning(results)
 
             for answer in results:
