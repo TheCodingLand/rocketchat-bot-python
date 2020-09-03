@@ -94,7 +94,7 @@ class Confluence(c.BaseCommand):
             pages =[]
             for answer in results:
                 urls.append(answer['content']['_links']['webui'])
-                page=confluence.get_page_by_id(answer['results'][0]['content']['id'], expand='body.view', status=None, version=None)
+                page=confluence.get_page_by_id(answer['content']['id'], expand='body.view', status=None, version=None)
                 pages.append(page)
             
             
@@ -106,8 +106,9 @@ class Confluence(c.BaseCommand):
 
                 
 
-            
+            await self.master.ddp.send_message(message.roomid, f"Some links :")
             await self.master.ddp.send_message(message.roomid, f"https://confluence.ctg.lu/{urls[0]}")
+            await self.master.ddp.send_message(message.roomid, f"Some Results from TINA: {final_results}")
             
             #user = message.mentions[0]
             #if user.username == message.created_by.username:
