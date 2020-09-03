@@ -23,8 +23,8 @@ logging.getLogger("rocketbot").setLevel(logging.INFO)
 
 confluence = Confluence(
     url='https://confluence.ctg.lu',
-    username='confluence',
-    password='confluence')
+    username='confluence_rc_bot',
+    password='B186o73l7')
     
 qa = QA() 
 
