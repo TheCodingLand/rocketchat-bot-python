@@ -40,10 +40,18 @@ def qa_prediction(question,context):
     result = qa.predict(context, question)
     
     root.warn(result)
-    answer=result[0][0]['answer'][0]
-    proba=result[1][0]['probability'][0]
+    
+    for a in range(0,len(result[0][0]['answer'])):
+        if len(result[0][0]['answer'][0]) >0:
+            answer=result[0][0]['answer'][a]
+            proba=result[1][0]['probability'][a]
+            break
+    
     root.warn(answer)
 
+    context = context.replace("\n", "")
+    
+    context = context.replace("", "")
     start=context.find(answer)
     end = start + len(answer)
     html_answer=f'<p>{context[start-20:start]}</p><span style="background-color:#dfd;">{context[start:end]}</span><p>{context[end:end+20]}</p>'
