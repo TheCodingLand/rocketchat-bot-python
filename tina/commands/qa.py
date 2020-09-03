@@ -49,9 +49,10 @@ def qa_prediction(question,context):
     
     root.warn(answer)
 
-    context = context.replace("\n", "")
+    context = context.replace("\n", " ")
+    context = context.replace("\t", " ")
     
-    context = context.replace("", "")
+    
     start=context.find(answer)
     end = start + len(answer)
     html_answer=f'<p>{context[start-20:start]}</p><span style="background-color:#dfd;">{context[start:end]}</span><p>{context[end:end+20]}</p>'
