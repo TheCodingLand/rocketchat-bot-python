@@ -58,7 +58,7 @@ def qa_prediction(question,context):
     html_answer=f'<p>{context[start-20:start]}</p><span style="background-color:#dfd;">{context[start:end]}</span><p>{context[end:end+20]}</p>'
     #print(html_answer)
 
-    return { "context": context, "question" : question, "start" : start, "end": end, "html" :html_answer, "link": "test", 'proba': proba}
+    return { "context": context, "question" : question, "start" : start, "end": end, "html" :html_answer, "link": "test", 'proba': proba, "answer": answer}
 
 
 
@@ -139,7 +139,7 @@ class Confluence(c.BaseCommand):
             #    root.warn(f"best proba: {best['html']}")
             
 
-            await self.master.ddp.send_message(message.roomid, f"{best['html']}")
+            await self.master.ddp.send_message(message.roomid, f"{best['answer']}")
 
                 
 
